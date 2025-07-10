@@ -250,16 +250,21 @@ html {
 .projects-section {
   background-color: #c4a484e2;
   color: #fff;
-  padding: 80px 20px;
   text-align: center;
-  height: 600px;
+  overflow: hidden;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 40px 20px;
+
 }
 
 .section-title {
   font-size: 2.5rem;
-  margin-bottom: 50px;
+  margin-bottom: 60px;
   color:#000;
-;
 }
 
 .projects-container {
@@ -412,5 +417,130 @@ html {
 
   .carousel-container {
     padding: 0 10px;
+  }
+}
+
+/*-----------------CONTACT ME--------------------------*/
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.contact-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 50px 20px;
+ 
+}
+
+.contact-container {
+  display: flex;
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 15px 25px rgba(0,0,0,0.3);
+  max-width: 1000px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.contact-info {
+  background-color: #f5f5f5;
+  color: #000;
+  flex: 1;
+  padding: 40px 30px;
+  min-width: 300px;
+}
+
+.contact-info h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #111;
+}
+
+.contact-info p {
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
+
+.contact-icons {
+  margin-top: 30px;
+}
+
+.contact-icons a {
+  margin-right: 15px;
+  display: inline-block;
+}
+
+.contact-icons img {
+  width: 30px;
+  height: 30px;
+  filter: grayscale(100%);
+  transition: 0.3s;
+}
+
+.contact-icons img:hover {
+  filter: none;
+}
+
+.contact-form {
+  flex: 1;
+  padding: 40px 30px;
+  background-color: #264d3b7e;
+  min-width: 300px;
+}
+
+.contact-form h3 {
+  margin-bottom: 25px;
+  font-size: 22px;
+}
+
+.contact-form form {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-form input,
+.contact-form textarea {
+  margin-bottom: 15px;
+  padding: 12px 15px;
+  border: none;
+  border-radius: 6px;
+  background: #1e1e1e;
+  color: #fff;
+  font-size: 14px;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: 2px solid orange;
+}
+
+.contact-form button {
+  background-color: orange;
+  color: #000;
+  padding: 12px;
+  border: none;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.contact-form button:hover {
+  background-color: #ff9900;
+}
+
+@media (max-width: 768px) {
+  .contact-container {
+    flex-direction: column;
+  }
+
+  .contact-form,
+  .contact-info {
+    width: 100%;
   }
 }

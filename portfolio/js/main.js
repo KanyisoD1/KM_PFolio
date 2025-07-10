@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Carousel logic (moved out of nested listener)
+  // Carousel logic
   const track = document.querySelector('.carousel-track');
   const cards = document.querySelectorAll('.card');
   const prevBtn = document.querySelector('.carousel-btn.prev');
@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const allCards = document.querySelectorAll('.card');
   const totalCards = allCards.length;
 
-  // Initial position (skip the cloned cards at the start)
+  // Initial position 
   index = visibleCards;
   track.style.transform = `translateX(-${index * cardWidth}px)`;
 
@@ -117,4 +117,31 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }, { once: true });
   });
+});
+
+//EmailJS
+document.getElementById('contact-form').addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  const recaptchaResponse = grecaptcha.getResponse();
+  if (!recaptchaResponse) {
+    alert("Please complete the reCAPTCHA.");
+    return;
+  }
+
+  const templateParams = {
+    from_name: document.getElementById('name').value,
+    from_email: document.getElementById('email').value,
+    message: document.getElementById('message').value,
+    "g-recaptcha-response": recaptchaResponse
+  };
+
+  emailjs.send('6Ld4FX4rAAAAAORE9viqxWWKs5tPL17AnZW7Dszu', '6Ld4FX4rAAAAAOQ0QDu4-3mB-pEYNUx9aeKHbb0Q', templateParams)
+    .then(function(response) {
+      alert("Message sent successfully!");
+      document.getElementById("contact-form").reset();
+      grecaptcha.reset();
+    }, function(error) {
+      alert("Failed to send message: " + error.text);
+    });
 });

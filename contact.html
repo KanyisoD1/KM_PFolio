@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Me</title>
+  <link rel="stylesheet" href="portfolio/css/style.css" />
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script>
+    (function () {
+      emailjs.init("JKTLXejG5gWOgOS3b");
+    })();
+  </script>
+</head>
+<body>
+  <div id="particles-js"></div>
+
+  <header>
+    <div class="logo">KM <span>Kanyiso</span></div>
+    <nav>
+      <ul>
+        <li><a href="portfolio/index.html" id="home" class="nav-link">Home</a></li>
+        <li><a href="../aboutme.htm" id="about" class="nav-link">About</a></li>
+        <li><a href="../projects.html" id="projects" class="nav-link">Projects</a></li>
+        <li><a href="../experience.html" id="experience" class="nav-link">Experience</a></li>
+        <li><a href="../contact.html" id="contact" class="nav-link active">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="contact-section">
+    <div class="contact-container">
+      <div class="contact-info">
+        <h2>Contact Me.</h2>
+        <p>I will reply within 24 hours to all messages submitted here.</p>
+        <p><strong>Email:</strong> kanyisomadlebe@yahoo.com</p>
+        <p><strong>Phone:</strong> +27 64 747 3024</p>
+        <div class="socials">
+          <a href="https://www.linkedin.com/in/kanyiso-madlebe-960670254/" target="_blank">
+            <i class='bx bxl-linkedin-square'></i>
+          </a>
+          <a href="https://wa.me/27647473024" target="_blank">
+            <i class='bx bxl-whatsapp'></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="contact-form">
+        <h3>Send Me a Message</h3>
+        <form id="contact-form">
+          <input type="text" name="from_name" placeholder="Full Name" required />
+          <input type="email" name="reply_to" placeholder="Email Address" required />
+          <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+          <div class="g-recaptcha" data-sitekey="6Ld4FX4rAAAAAORE9viqxWWKs5tPL17AnZW7Dszu"></div>
+          <button type="submit">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script src="../portfolio/js/main.js"></script>
+  <script>
+    document.getElementById("contact-form").addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      emailjs.sendForm('service_azrlg2p', 'template_1ud1lrl', this)
+        .then(function () {
+          alert("Message sent successfully!");
+          document.getElementById("contact-form").reset();
+        }, function (error) {
+          alert("Failed to send message: " + JSON.stringify(error));
+        });
+    });
+  </script>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+</body>
+</html>
