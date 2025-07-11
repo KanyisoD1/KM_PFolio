@@ -36,6 +36,22 @@ particlesJS("particles-js", {
     move: { enable: true, speed: 2 }
   }
 });
+document.addEventListener("DOMContentLoaded", () => {
+  particlesJS("particles-js", {
+    particles: {
+      number: { value: 80 },
+      size: { value: 3 },
+      line_linked: {
+        enable: true,
+        distance: 150,
+        color: "#000000",
+        opacity: 0.4,
+        width: 1
+      },
+      move: { enable: true, speed: 2 }
+    }
+  });
+});
 
 // Entire script wrapped once — no nesting!
 document.addEventListener("DOMContentLoaded", () => {
