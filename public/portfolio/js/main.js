@@ -21,61 +21,48 @@ let letter = "";
   }
 })();
 
-// Particles.js config
-particlesJS("particles-js", {
-  particles: {
-    number: { value: 80 },
-    size: { value: 3 },
-    line_linked: {
-      enable: true,
-      distance: 150,
-      color: "#000000",
-      opacity: 0.4,
-      width: 1
-    },
-    move: { enable: true, speed: 2 }
+// Particles.js
+document.addEventListener("DOMContentLoaded", () => {
+  if (document.getElementById("particles-js")) {
+    particlesJS("particles-js", {
+      particles: {
+        number: { value: 80 },
+        size: { value: 3 },
+        line_linked: {
+          enable: true,
+          distance: 150,
+          color: "#000000",
+          opacity: 0.4,
+          width: 1
+        },
+        move: { enable: true, speed: 2 }
+      }
+    });
   }
-});
-document.addEventListener("DOMContentLoaded", () => {
-  particlesJS("particles-js", {
-    particles: {
-      number: { value: 80 },
-      size: { value: 3 },
-      line_linked: {
-        enable: true,
-        distance: 150,
-        color: "#000000",
-        opacity: 0.4,
-        width: 1
-      },
-      move: { enable: true, speed: 2 }
-    }
-  });
-});
 
-// Entire script wrapped once — no nesting!
-document.addEventListener("DOMContentLoaded", () => {
   // Scrollspy
   const sections = document.querySelectorAll("section[id]");
   const navLinks = document.querySelectorAll("nav ul li a");
 
-  window.addEventListener("scroll", () => {
-    let current = "";
-    sections.forEach(section => {
-      const sectionTop = section.offsetTop - 120;
-      const sectionHeight = section.clientHeight;
-      if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
-        current = section.getAttribute("id");
-      }
-    });
+  if (sections.length && navLinks.length) {
+    window.addEventListener("scroll", () => {
+      let current = "";
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 120;
+        const sectionHeight = section.clientHeight;
+        if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+          current = section.getAttribute("id");
+        }
+      });
 
-    navLinks.forEach(link => {
-      link.classList.remove("active");
-      if (link.getAttribute("href") === `#${current}`) {
-        link.classList.add("active");
-      }
+      navLinks.forEach(link => {
+        link.classList.remove("active");
+        if (link.getAttribute("href") === `#${current}`) {
+          link.classList.add("active");
+        }
+      });
     });
-  });
+  }
 
   // Carousel logic
   const track = document.querySelector('.carousel-track');
@@ -83,81 +70,98 @@ document.addEventListener("DOMContentLoaded", () => {
   const prevBtn = document.querySelector('.carousel-btn.prev');
   const nextBtn = document.querySelector('.carousel-btn.next');
 
-  const visibleCards = 3;
-  const cardWidth = cards[0].offsetWidth + 20;
-  let index = 0;
+  if (track && cards.length > 0 && prevBtn && nextBtn) {
+    const visibleCards = 3;
+    const cardWidth = cards[0].offsetWidth + 20;
+    let index = visibleCards;
 
-  // Clone first and last few cards for infinite loop effect
-  for (let i = 0; i < visibleCards; i++) {
-    const firstClone = cards[i].cloneNode(true);
-    const lastClone = cards[cards.length - 1 - i].cloneNode(true);
-    track.appendChild(firstClone);
-    track.insertBefore(lastClone, track.firstChild);
-  }
+    // Clone cards
+    for (let i = 0; i < visibleCards; i++) {
+      const firstClone = cards[i].cloneNode(true);
+      const lastClone = cards[cards.length - 1 - i].cloneNode(true);
+      track.appendChild(firstClone);
+      track.insertBefore(lastClone, track.firstChild);
+    }
 
-  // Update full card list after cloning
-  const allCards = document.querySelectorAll('.card');
-  const totalCards = allCards.length;
+    const allCards = document.querySelectorAll('.card');
+    const totalCards = allCards.length;
 
-  // Initial position 
-  index = visibleCards;
-  track.style.transform = `translateX(-${index * cardWidth}px)`;
-
-  function moveToIndex() {
-    track.style.transition = "transform 0.5s ease-in-out";
+    // Initial position
     track.style.transform = `translateX(-${index * cardWidth}px)`;
-  }
 
-  nextBtn.addEventListener('click', () => {
-    index++;
-    moveToIndex();
+    function moveToIndex() {
+      track.style.transition = "transform 0.5s ease-in-out";
+      track.style.transform = `translateX(-${index * cardWidth}px)`;
+    }
 
-    track.addEventListener('transitionend', () => {
-      if (index >= totalCards - visibleCards) {
-        index = visibleCards;
-        track.style.transition = "none";
-        track.style.transform = `translateX(-${index * cardWidth}px)`;
-      }
-    }, { once: true });
-  });
-
-  prevBtn.addEventListener('click', () => {
-    index--;
-    moveToIndex();
-
-    track.addEventListener('transitionend', () => {
-      if (index < visibleCards) {
-        index = totalCards - visibleCards * 2;
-        track.style.transition = "none";
-        track.style.transform = `translateX(-${index * cardWidth}px)`;
-      }
-    }, { once: true });
-  });
-});
-
-//EmailJS
-document.getElementById('contact-form').addEventListener('submit', function(event) {
-  event.preventDefault();
-
-  const recaptchaResponse = grecaptcha.getResponse();
-  if (!recaptchaResponse) {
-    alert("Please complete the reCAPTCHA.");
-    return;
-  }
-
-  const templateParams = {
-    from_name: document.getElementById('name').value,
-    from_email: document.getElementById('email').value,
-    message: document.getElementById('message').value,
-    "g-recaptcha-response": recaptchaResponse
-  };
-
-  emailjs.send('6Ld4FX4rAAAAAORE9viqxWWKs5tPL17AnZW7Dszu', '6Ld4FX4rAAAAAOQ0QDu4-3mB-pEYNUx9aeKHbb0Q', templateParams)
-    .then(function(response) {
-      alert("Message sent successfully!");
-      document.getElementById("contact-form").reset();
-      grecaptcha.reset();
-    }, function(error) {
-      alert("Failed to send message: " + error.text);
+    nextBtn.addEventListener('click', () => {
+      index++;
+      moveToIndex();
+      track.addEventListener('transitionend', () => {
+        if (index >= totalCards - visibleCards) {
+          index = visibleCards;
+          track.style.transition = "none";
+          track.style.transform = `translateX(-${index * cardWidth}px)`;
+        }
+      }, { once: true });
     });
+
+    prevBtn.addEventListener('click', () => {
+      index--;
+      moveToIndex();
+      track.addEventListener('transitionend', () => {
+        if (index < visibleCards) {
+          index = totalCards - visibleCards * 2;
+          track.style.transition = "none";
+          track.style.transform = `translateX(-${index * cardWidth}px)`;
+        }
+      }, { once: true });
+    });
+  }
+
+  // EmailJS
+  const contactForm = document.getElementById('contact-form');
+  if (contactForm) {
+    contactForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      const recaptchaResponse = grecaptcha.getResponse();
+      if (!recaptchaResponse) {
+        alert("Please complete the reCAPTCHA.");
+        return;
+      }
+
+      const templateParams = {
+        from_name: document.getElementById('name').value,
+        from_email: document.getElementById('email').value,
+        message: document.getElementById('message').value,
+        "g-recaptcha-response": recaptchaResponse
+      };
+
+      emailjs.send('6Ld4FX4rAAAAAORE9viqxWWKs5tPL17AnZW7Dszu', '6Ld4FX4rAAAAAOQ0QDu4-3mB-pEYNUx9aeKHbb0Q', templateParams)
+        .then(function (response) {
+          alert("Message sent successfully!");
+          contactForm.reset();
+          grecaptcha.reset();
+        }, function (error) {
+          alert("Failed to send message: " + error.text);
+        });
+    });
+  }
+
+  // Menu toggle for mobile
+  const toggle = document.getElementById('menuToggle');
+  const nav = document.getElementById('navLinks');
+
+  if (toggle && nav) {
+    toggle.addEventListener('click', () => {
+      nav.classList.toggle('show');
+    });
+
+    document.querySelectorAll('#navLinks a').forEach(link => {
+      link.addEventListener('click', () => {
+        nav.classList.remove('show');
+      });
+    });
+  }
 });
